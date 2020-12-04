@@ -1,3 +1,13 @@
+<?php
+    require '../../clases/Conexion.php';
+    require '../../clases/Productos.php';
+    $check = false;
+    $productos = new Productos('','','','','','','','');
+    $resultados = $productos->getDatos();
+    if (!empty($resultados)) {
+        $check = true;
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -279,54 +289,38 @@
                                         <h6 class="font-weight-bold mb-0">Listado de Productos</h6>
                                     </div>
                                     <div class="card-body">
+                                        <?php if ($check) { ?>
                                         <table class="table">
                                             <thead class="thead-dark">
                                                 <tr>
-                                                    <th scope="col">#</th>
-                                                    <th scope="col">First</th>
-                                                    <th scope="col">Last</th>
-                                                    <th scope="col">Handle</th>
+                                                    <th scope="col">Código</th>
+                                                    <th scope="col">Descripción</th>
+                                                    <th scope="col">Tamaño</th>
+                                                    <th scope="col">Precio</th>
+                                                    <th scope="col">Costo</th>
+                                                    <th scope="col">Existencia</th>
+                                                    <th scope="col">Punto ReOrden</th>
+                                                    <th scope="col">Estado</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                <?php foreach ($resultados as $res) { ?>
                                                 <tr>
-                                                    <th scope="row">1</th>
-                                                    <td>Mark</td>
-                                                    <td>Otto</td>
-                                                    <td>@mdo</td>
+                                                    <th scope="row"><?=$res['cod_producto'] ?></th>
+                                                    <td><?=$res['descripcion_producto'] ?></td>
+                                                    <td><?=$res['tamaño_producto'] ?></td>
+                                                    <td><?=$res['precio_producto'] ?></td>
+                                                    <td><?=$res['costo_produccion'] ?></td>
+                                                    <td><?=$res['existencia'] ?></td>
+                                                    <td><?=$res['punto_reorden'] ?></td>
+                                                    <td><?=$res['estado_producto'] ?></td>
                                                 </tr>
-                                                <tr>
-                                                    <th scope="row">2</th>
-                                                    <td>Jacob</td>
-                                                    <td>Thornton</td>
-                                                    <td>@fat</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">3</th>
-                                                    <td>Larry</td>
-                                                    <td>the Bird</td>
-                                                    <td>@twitter</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">4</th>
-                                                    <td>Larry</td>
-                                                    <td>the Bird</td>
-                                                    <td>@twitter</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">5</th>
-                                                    <td>Larry</td>
-                                                    <td>the Bird</td>
-                                                    <td>@twitter</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">6</th>
-                                                    <td>Larry</td>
-                                                    <td>the Bird</td>
-                                                    <td>@twitter</td>
-                                                </tr>
+                                                <?php } ?>
                                             </tbody>
                                         </table>
+                                        <?php } else { ?>
+                                        <h6 class="font-weight-bold mb-0">Listado de Productos</h6>
+                                        <?php } ?>
                                     </div>
                                 </div>
                             </div>
@@ -351,14 +345,14 @@
 
     <!-- jQuery and JS bundle w/ Popper.js -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-        crossorigin="anonymous"></script>
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"
-        integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
-        crossorigin="anonymous"></script>
+        integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous">
+    </script>
 </body>
 
 </html>
