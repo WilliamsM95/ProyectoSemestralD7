@@ -319,7 +319,7 @@
                                             </tbody>
                                         </table>
                                         <?php } else { ?>
-                                        <h6 class="font-weight-bold mb-0">Listado de Productos</h6>
+                                        <h6 class="font-weight-bold mb-0">La tabla no se puede mostrar, verifique que las sentencias de la BD estén correctos.</h6>
                                         <?php } ?>
                                     </div>
                                 </div>

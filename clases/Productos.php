@@ -21,17 +21,6 @@ class Productos {
         }
 
         $query = "SELECT * FROM producto ORDER BY cod_producto ASC";
-        /*
-        $rol;        
-        if (isset($_SESSION["rol"])){
-            $rol = $_SESSION["rol"];
-            if($rol != "admin"){
-                $usuario = $_SESSION['usuario'];
-                $query = "SELECT * FROM datos WHERE usuario = '".$usuario."'";
-            }
-        }
-        */
-
         $res = mysqli_query($conn->Conectar(),$query);
         $datos = array();
         while($row = mysqli_fetch_assoc($res)){
