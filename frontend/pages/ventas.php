@@ -1,29 +1,16 @@
 <?php
     require '../../clases/Conexion.php';
-    require '../../clases/Productos.php';
+    require '../../clases/Ventas.php';
     $check = false;
-    $codigoProducto = 0;
-    $productos = new Productos();
-    $resultados = $productos->getDatos();
+    $ventas = new Ventas();
+    $resultados = $ventas->getDatos();
     if (!empty($resultados)) {
         $check = true;
     }
 
-    // if(isset($_POST['submit'])){
-    //     $arregloSeleccionado = $_POST['arreglo'];
-    //     $remitente = $_POST['remitente'];
-    //     $destinatario = $_POST['destinatario'];
-    //     $telefono = $_POST['telefono'];
-    //     $direccion = $_POST['direccion'];
-    //     $mensaje = $_POST['mensaje'];
-    //     $color = $_POST['color'];
+    $categorias = $ventas->getCategoria();
+    $tipos = $ventas->getTipo();
 
-    //     $datos = new Datos($remitente, $destinatario, $telefono, $direccion, $mensaje, $color, $arregloSeleccionado);
-
-    //     echo $datos->InsertarDatos();
-    //     $resultados = $login->getDatos();
-    //     $check = true;
-    // }
 
 ?>
 <!DOCTYPE html>
@@ -41,44 +28,52 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
         integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous" />
     <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/productos.css">
+    <link rel="stylesheet" href="../css/ventas.css">
 
 </head>
 
 <body>
-    <!-- Modal Agregar Producto -->
-    <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModal" aria-hidden="true">
+    <!-- Vender Producto -->
+    <div class="modal fade" id="venderProducto" tabindex="-1" aria-labelledby="addProductModal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addProductModal">
-                        Agregar Productos
+                        Vender Productos
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+                <!-- <form>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="codigo">Código</label>
-                            <input type="text" class="form-control" id="codigo" />
+                            <label for="categoriaProducto">Categoría Producto</label>
+                            <select class="form-control" id="categoriaProducto" name="categoriaProducto">
+                                <?php 
+                                    foreach ($categorias as $categoria) {
+                                        echo '<option>'.$categoria[descripcion].'</option>'; 
+                                    }                    
+                                ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">Tipo de Producto</label>
+                            <select class="form-control" id="tipoProducto" name="tipoProducto">
+                                <?php 
+                                    foreach ($tipos as $tipo) {
+                                        echo '<option>'.$tipo[descripcion].'</option>'; 
+                                    }                    
+                                ?>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="nombre">Nombre</label>
                             <input type="text" class="form-control" id="nombre" />
                         </div>
                         <div class="form-group">
-                            <label for="descripcion">Descripción</label>
-                            <input type="text" class="form-control" id="descripcion" />
-                        </div>
-                        <div class="form-group">
                             <label for="cantidad">Cantidad</label>
                             <input type="text" class="form-control" id="cantidad" />
-                        </div>
-                        <div class="form-group">
-                            <label for="precio">Precio</label>
-                            <input type="text" class="form-control" id="precio" />
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -89,23 +84,7 @@
                             Agregar
                         </button>
                     </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Editar Producto -->
-    <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModal" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editProductModal">
-                        Editar Productos
-                    </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+                </form> -->
                 <form>
                     <div class="modal-body">
                         <div class="form-group">
@@ -142,6 +121,43 @@
         </div>
     </div>
 
+    <!-- Modal Agregar al Inventario -->
+    <div class="modal fade" id="addProductInventarioModal" tabindex="-1" aria-labelledby="addProductInventarioModal"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addProductInventarioModal">
+                        Agregar Productos al Inventario
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="codigo">Código</label>
+                            <input type="text" class="form-control" id="codigo" />
+                        </div>
+                        <div class="form-group">
+                            <label for="cantidad">Cantidad</label>
+                            <input type="text" class="form-control" id="cantidad" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Cerrar
+                        </button>
+                        <button type="submit" name="addProductsInventario" class="btn btn-primary">
+                            Agregar Productos
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Pagina Visible -->
     <div class="d-flex">
         <!-- Inicio del Sidebar -->
@@ -151,10 +167,10 @@
             </div>
             <div class="menu">
                 <a href="#" class="d-block text-light p-3"><i class="icon ion-md-cog mr-2 lead"></i>Panel de Control</a>
-                <a href="#" class="d-block text-light p-3"><i class="icon ion-md-basket mr-2 lead"></i>Productos</a>
-                <a href="./ventas.php" class="d-block text-light p-3"><i
-                        class="icon ion-md-cash mr-2 lead"></i>Ventas</a>
-                <a href="" class="d-block text-light p-3"><i class="icon ion-md-contacts mr-2 lead"></i>Clientes</a>
+                <a href="./productos.php" class="d-block text-light p-3"><i
+                        class="icon ion-md-basket mr-2 lead"></i>Productos</a>
+                <a href="#" class="d-block text-light p-3 active"><i class="icon ion-md-cash mr-2 lead"></i>Ventas</a>
+                <a href="#" class="d-block text-light p-3"><i class="icon ion-md-contacts mr-2 lead"></i>Clientes</a>
             </div>
         </div>
         <!-- Fin del Sidebar -->
@@ -168,12 +184,7 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <form class="form-inline position-relative my-2 d-inline-block">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Buscar Producto"
-                            aria-label="Buscar">
-                        <button class="btn btn-search position-absolute" type="submit"><i
-                                class="icon ion-md-search"></i></button>
-                    </form>
+
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item dropdown">
@@ -201,18 +212,32 @@
                         <div class="row">
                             <div class="col-lg-9">
                                 <h1 class="font-weight-bold mb-0">Bienvenido Usuario</h1>
-                                <p class="lead text-muted">Mantenimiento de Productos</p>
-                            </div>
-                            <div class="col-lg-3 d-flex ">
-                                <button type="button" class="btn btn-primary w-100 align-self-center"
-                                    data-toggle="modal" data-target="#addProductModal">Agregar
-                                    Producto</button>
+                                <p class="lead text-muted">Mantenimiento de Ventas</p>
                             </div>
                         </div>
                     </div>
                 </section>
                 <section class="bg-mix">
                     <div class="container">
+                        <div class="card rounded-0">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-6 d-flex stat my-3 ">
+                                        <div class="mx-auto">
+                                            <button type="button" class="btn btn-primary w-100 align-self-center"
+                                                data-toggle="modal" data-target="#venderProducto">Agregar
+                                                Venta</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 d-flex stat my-3 ">
+                                        <div class="mx-auto">
+                                            <button class="btn btn-primary w-100 align-self-center">Ver Todas las
+                                                Ventas</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </section>
                 <section class="bg-grey">
@@ -221,55 +246,41 @@
                             <div class="col-lg-12 my-3">
                                 <div class="card rounded-0">
                                     <div class="card-header bg-light">
-                                        <h6 class="font-weight-bold mb-0">Listado de Productos en Inventario</h6>
+                                        <h6 class="font-weight-bold mb-0">Listado de Productos</h6>
                                     </div>
                                     <div class="card-body">
-                                        <?php if ($check) { ?>
+                                        <!-- <?php if ($check) { ?> -->
                                         <table class="table">
                                             <thead class="thead-dark">
                                                 <tr>
                                                     <th scope="col">Código</th>
-                                                    <th scope="col">Nombre</th>
-                                                    <th scope="col">Categoría</th>
-                                                    <th scope="col">Tipo</th>
-                                                    <th scope="col">Cajas Totales</th>
-                                                    <th scope="col">Salidas Totales</th>
+                                                    <th scope="col">Descripción</th>
+                                                    <th scope="col">Tamaño</th>
+                                                    <th scope="col">Precio</th>
+                                                    <th scope="col">Costo</th>
                                                     <th scope="col">Existencia</th>
-                                                    <th scope="col">Precio Unitario</th>
-                                                    <th scope="col">Importe Inventariado</th>
-                                                    <th scope="col">Ventas Totales</th>
-                                                    <th scope="col">Acción</th>
+                                                    <th scope="col">Punto ReOrden</th>
+                                                    <th scope="col">Estado</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php foreach ($resultados as $res) { ?>
+                                                <!-- <?php foreach ($resultados as $res) { ?> -->
                                                 <tr>
-                                                    <td class="font-weight-bold"><?=$res['cod_producto'] ?></td>
-                                                    <td><?=$res['nombre'] ?></td>
-                                                    <td><?=$res['Categoria'] ?></td>
-                                                    <td><?=$res['Tipo'] ?></td>
-                                                    <td><?=$res['cajas_totales'] ?></td>
-                                                    <td><?=$res['salidas_totales'] ?></td>
-                                                    <td><?=$res['stock'] ?></td>
-                                                    <td><?=$res['precio_unitario'] ?></td>
-                                                    <td><?=$res['importe_inventariado'] ?></td>
-                                                    <td><?=$res['ventas_total'] ?></td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-secondary editbtn"
-                                                            value="<?php echo $res['cod_producto']; ?>">
-                                                            Editar
-                                                        </button>
-                                                        <a href="../../procesos.php?delete=<?php echo $res['cod_producto']; ?>"
-                                                            class="btn btn-danger my-1">Eliminar</a>
-                                                    </td>
+                                                    <!--<th scope="row"><?=$res['cod_producto'] ?></th>
+                                                    <td><?=$res['descripcion_producto'] ?></td>
+                                                    <td><?=$res['tamaño_producto'] ?></td>
+                                                    <td><?=$res['precio_producto'] ?></td>
+                                                    <td><?=$res['costo_produccion'] ?></td>
+                                                    <td><?=$res['existencia'] ?></td>
+                                                    <td><?=$res['punto_reorden'] ?></td>
+                                                    <td><?=$res['estado_producto'] ?></td> -->
                                                 </tr>
-                                                <?php } ?>
+                                                <!-- <?php } ?> -->
                                             </tbody>
                                         </table>
-                                        <?php } else { ?>
-                                        <h6 class="font-weight-bold mb-0">La tabla no se puede mostrar, verifique que
-                                            las sentencias de la BD estén correctos.</h6>
-                                        <?php } ?>
+                                        <!-- <?php } else { ?>
+                                        <h6 class="font-weight-bold mb-0">La tabla no se puede mostrar, verifique que las sentencias de la BD estén correctos.</h6>
+                                        <?php } ?> -->
                                     </div>
                                 </div>
                             </div>
@@ -290,26 +301,6 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"
         integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous">
-    </script>
-    <script>
-    $(document).ready(function() {
-        $('.editbtn').on('click', function() {
-
-            $('#editProductModal').modal('show');
-
-            $tr = $(this).closest('tr');
-            var datos = $tr.children("td").map(function() {
-                return $(this).text();
-            }).get();
-            console.log(datos);
-            $('#codigoUp').val(datos[0].replace(/\n/g, ' '));
-            $('#nombreUp').val(datos[1]);
-            $('#descripcionUp').val(datos[2]);
-            $('#TipoUp').val(datos[3]);
-            $('#cantidadUp').val(datos[6]);
-            $('#precioUp').val(datos[7]);
-        });
-    });
     </script>
 </body>
 
