@@ -44,7 +44,7 @@ if(isset($_POST['enviar'])){
             var frm=document.form1;
             frm.style.display="none"    
             </script>
-            <form action="clases/Productos.php" name="form2" method='POST'>
+            <form action="frontend/pages/productos.php" name="form2" method='POST'>
                 <h2>Bienvenido haga click Aquí</h2>
                 <h2><?= $_SESSION["usuario"]?></h2>  
         <input type="submit" class="btn-comenzar" name="comenzar" value="Comenzar">

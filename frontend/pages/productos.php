@@ -1,6 +1,12 @@
 <?php
     require '../../clases/Conexion.php';
     require '../../clases/Productos.php';
+    session_start();
+
+    if ($_SESSION["usuario"]==""){
+        header('Location: ../../index.php');
+    }
+
     $check = false;
     $codigoProducto = 0;
     $productos = new Productos();
@@ -150,11 +156,9 @@
                 <h4 class="text-light font-weight-bold">Productos</h4>
             </div>
             <div class="menu">
-                <a href="#" class="d-block text-light p-3"><i class="icon ion-md-cog mr-2 lead"></i>Panel de Control</a>
                 <a href="#" class="d-block text-light p-3"><i class="icon ion-md-basket mr-2 lead"></i>Productos</a>
                 <a href="./ventas.php" class="d-block text-light p-3"><i
                         class="icon ion-md-cash mr-2 lead"></i>Ventas</a>
-                <a href="" class="d-block text-light p-3"><i class="icon ion-md-contacts mr-2 lead"></i>Clientes</a>
             </div>
         </div>
         <!-- Fin del Sidebar -->
@@ -181,13 +185,13 @@
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <img src="../assets/perfil.jpg" alt="imagen de perfil"
                                         class="img-fluid rounded-circle avatar mr-2">
-                                    Perfil de Usuario
+                                        <?= $_SESSION["usuario"]?>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="#">Mi Perfil</a>
                                     <a class="dropdown-item" href="#">Configuración</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Cerrar Sesión</a>
+                                    <a class="dropdown-item" href="../../logout.php">Cerrar Sesión</a>
                                 </div>
                             </li>
                         </ul>
