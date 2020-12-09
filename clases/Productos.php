@@ -72,4 +72,50 @@ class Productos {
     
     }
 
+    public function InsertarProductos($cod_producto, $nombre_producto, $categoria, $stock,$precio_unitario)
+    {//($idCliente, $nombreCliente, $categoria, $tipo_producto, $cajas_totales, $salidas_totales, $stock, $precio_unitario, $importe, $ventas_tot);
+        $con = new Conexion();   
+        $insertar = "INSERT INTO inventario(cod_producto, nombre,categoria,stock,precio_unitario) VALUES ('$cod_producto', '$nombre_producto', '$categoria','$stock', '$precio_unitario')";
+        
+        $query = mysqli_query($con->Conexion(),$insertar);
+    }
+
+    public function getCategoria(){
+        // Creando la conexion
+        $conn = new Conexion();
+        $con = $conn->Conectar();
+        // Verificando la conexion
+        if ($con->connect_error) {
+            die("Conexión Fallida: " . $con->connect_error);
+        }
+
+        $query = "SELECT * FROM `inventario_categoria`";        
+        $res = mysqli_query($conn->Conectar(),$query);
+        $datos = array();
+        while($row = mysqli_fetch_assoc($res)){
+            $datos[] = $row;
+        }
+        $con->close();
+        return $datos;
+    }
+
+    public function getTipo(){
+        // Creando la conexion
+        $conn = new Conexion();
+        $con = $conn->Conectar();
+        // Verificando la conexion
+        if ($con->connect_error) {
+            die("Conexión Fallida: " . $con->connect_error);
+        }
+
+        $query = "SELECT * FROM `inventario_tipo`";        
+        $res = mysqli_query($conn->Conectar(),$query);
+        $datos = array();
+        while($row = mysqli_fetch_assoc($res)){
+            $datos[] = $row;
+        }
+        $con->close();
+        return $datos;
+    }
+
 }

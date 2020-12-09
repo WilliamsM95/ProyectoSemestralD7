@@ -15,6 +15,9 @@
         $check = true;
     }
 
+    $categorias = $productos->getCategoria();
+    $tipos = $productos->getTipo();
+
     // if(isset($_POST['submit'])){
     //     $arregloSeleccionado = $_POST['arreglo'];
     //     $remitente = $_POST['remitente'];
@@ -64,27 +67,43 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+                <form action="" method="POST">
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="codigo">Código</label>
-                            <input type="text" class="form-control" id="codigo" />
+                            <input type="text" class="form-control" id="codigo" name="codigo"/>
                         </div>
                         <div class="form-group">
                             <label for="nombre">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" />
+                            <input type="text" class="form-control" id="nombre" name="nombre"/>
                         </div>
                         <div class="form-group">
-                            <label for="descripcion">Descripción</label>
-                            <input type="text" class="form-control" id="descripcion" />
+                            <label for="categoria">Categoria</label>
+                            <select class="custom-select my-1 mr-sm-2" id="categoria" name="categoria">
+                                <?php 
+                                    foreach ($categorias as $categoria) {
+                                        echo '<option '.$categoria[id_categoria].'>'.$categoria[descripcion].'</option>'; 
+                                    }                    
+                                ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="tipo">Tipo</label>
+                            <select class="custom-select my-1 mr-sm-2" id="tipo" name="tipo">
+                                <?php 
+                                    foreach ($tipos as $tipo) {
+                                        echo '<option '.$tipo[id_tipo].'>'.$tipo[descripcion].'</option>'; 
+                                    }                    
+                                ?>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="cantidad">Cantidad</label>
-                            <input type="text" class="form-control" id="cantidad" />
+                            <input type="text" class="form-control" id="cantidad" name="cantidad"/>
                         </div>
                         <div class="form-group">
                             <label for="precio">Precio</label>
-                            <input type="text" class="form-control" id="precio" />
+                            <input type="text" class="form-control" id="precio" name="precio"/>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -124,6 +143,7 @@
                             <label for="nombreUp">Nombre</label>
                             <input type="text" name="nom" class="form-control" id="nombreUp" required/>
                         </div>
+<<<<<<< HEAD
                        
                         <div class="arreglo">
                         <label>Seleccionador de Categoria
@@ -140,6 +160,27 @@
                         <?php }?>
                         </select>
                         </label>
+=======
+                        <div class="form-group">
+                            <label for="categoria">Categoria</label>
+                            <select class="custom-select my-1 mr-sm-2" id="categoria" name="categoria">
+                                <?php 
+                                    foreach ($categorias as $categoria) {
+                                        echo '<option '.$categoria[id_categoria].'>'.$categoria[descripcion].'</option>'; 
+                                    }                    
+                                ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="tipo">Tipo</label>
+                            <select class="custom-select my-1 mr-sm-2" id="tipo" name="tipo">
+                                <?php 
+                                    foreach ($tipos as $tipo) {
+                                        echo '<option '.$tipo[id_tipo].'>'.$tipo[descripcion].'</option>'; 
+                                    }                    
+                                ?>
+                            </select>
+>>>>>>> 0ffca0d5a9cae36b2c4d654b1a8204bba70b858e
                         </div>
 
                         <div class="arreglo">
