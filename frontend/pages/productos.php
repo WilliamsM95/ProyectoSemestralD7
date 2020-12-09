@@ -68,23 +68,23 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="codigo">Código</label>
-                            <input type="text" class="form-control" id="codigo" />
+                            <input type="text" class="form-control" id="codigo" name="codigo"/>
                         </div>
                         <div class="form-group">
                             <label for="nombre">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" />
+                            <input type="text" class="form-control" id="nombre" name="nombre"/>
                         </div>
                         <div class="form-group">
                             <label for="descripcion">Descripción</label>
-                            <input type="text" class="form-control" id="descripcion" />
+                            <input type="text" class="form-control" id="descripcion" name="descripcion"/>
                         </div>
                         <div class="form-group">
                             <label for="cantidad">Cantidad</label>
-                            <input type="text" class="form-control" id="cantidad" />
+                            <input type="text" class="form-control" id="cantidad" name="cantidad"/>
                         </div>
                         <div class="form-group">
                             <label for="precio">Precio</label>
-                            <input type="text" class="form-control" id="precio" />
+                            <input type="text" class="form-control" id="precio" name="precio"/>
                         </div>
                     </div>
                     <div class="modal-footer">
