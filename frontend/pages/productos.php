@@ -112,27 +112,60 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form>
+                <form action="../../Editar.php" method='POST'>
+
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="codigoUp">Código</label>
-                            <input type="text" id="codigoUp" class="form-control" disabled>
+                            <input type="number" name="id" class="form-control" id="codigoUp" readonly>
                         </div>
+
                         <div class="form-group">
                             <label for="nombreUp">Nombre</label>
-                            <input type="text" class="form-control" id="nombreUp" />
+                            <input type="text" name="nom" class="form-control" id="nombreUp" required/>
                         </div>
-                        <div class="form-group">
-                            <label for="descripcionUp">Descripción</label>
-                            <input type="text" class="form-control" id="descripcionUp" />
+                       
+                        <div class="arreglo">
+                        <label>Seleccionador de Categoria
+                        <select name = "cat" >
+                        <?php
+
+                        $conn = new Conexion();
+                        $con = $conn->Conectar();
+                        $query = "SELECT * FROM inventario_categoria";
+                        $result = mysqli_query($conn->Conectar(), $query);
+                        while($row =mysqli_fetch_assoc($result)){
+                        ?>
+                        <option value="<?= $row['id_categoria'] ?>"><?= $row['descripcion'] ?></option>
+                        <?php }?>
+                        </select>
+                        </label>
                         </div>
+
+                        <div class="arreglo">
+                        <label>Seleccionador de Tipo
+                        <select name = "tipo" >
+                        <?php
+
+                        $conn = new Conexion();
+                        $con = $conn->Conectar();
+                        $query = "SELECT * FROM inventario_tipo;";
+                        $result = mysqli_query($conn->Conectar(), $query);
+                        while($row =mysqli_fetch_assoc($result)){
+                        ?>
+                        <option value="<?= $row['id_tipo'] ?>"><?= $row['descripcion'] ?></option>
+                        <?php }?>
+                        </select>
+                        </label>
+                        </div>  
+  
                         <div class="form-group">
                             <label for="cantidadUp">Cantidad</label>
-                            <input type="text" class="form-control" id="cantidadUp" />
+                            <input type="text" name="cant" class="form-control" id="cantidadUp" required/>
                         </div>
                         <div class="form-group">
                             <label for="precioUp">Precio</label>
-                            <input type="text" class="form-control" id="precioUp" />
+                            <input type="text" name="precio" class="form-control" id="precioUp" required/>
                         </div>
                     </div>
                     <div class="modal-footer">
