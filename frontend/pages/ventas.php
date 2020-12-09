@@ -2,14 +2,18 @@
     require '../../clases/Conexion.php';
     require '../../clases/Ventas.php';
     $check = false;
+    $checkList = false;
     $ventas = new Ventas();
     $resultados = $ventas->getDatos();
     if (!empty($resultados)) {
         $check = true;
     }
 
-    $categorias = $ventas->getCategoria();
-    $tipos = $ventas->getTipo();
+    session_start(); 
+    if (isset($_SESSION['carrito'])) {
+        $carrito = $_SESSION['carrito']; 
+        $checkList = true;
+    }  
 
 
 ?>
@@ -34,123 +38,43 @@
 
 <body>
     <!-- Vender Producto -->
-    <div class="modal fade" id="venderProducto" tabindex="-1" aria-labelledby="addProductModal" aria-hidden="true">
+    <div class="modal fade" id="venderProducto" tabindex="-1" aria-labelledby="venderProducto" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addProductModal">
+                    <h5 class="modal-title" id="venderProducto">
                         Vender Productos
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <!-- <form>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="categoriaProducto">Categoría Producto</label>
-                            <select class="form-control" id="categoriaProducto" name="categoriaProducto">
-                                <?php 
-                                    foreach ($categorias as $categoria) {
-                                        echo '<option>'.$categoria[descripcion].'</option>'; 
-                                    }                    
-                                ?>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="nombre">Tipo de Producto</label>
-                            <select class="form-control" id="tipoProducto" name="tipoProducto">
-                                <?php 
-                                    foreach ($tipos as $tipo) {
-                                        echo '<option>'.$tipo[descripcion].'</option>'; 
-                                    }                    
-                                ?>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="nombre">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" />
-                        </div>
-                        <div class="form-group">
-                            <label for="cantidad">Cantidad</label>
-                            <input type="text" class="form-control" id="cantidad" />
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                            Cerrar
-                        </button>
-                        <button type="submit" name="addProducts" class="btn btn-primary">
-                            Agregar
-                        </button>
-                    </div>
-                </form> -->
-                <form>
+                <form action="../../procesoVentas.php" method="post">
+                    <input type="hidden" id="tipoUp" name="tipoUp" />
+                    <input type="hidden" id="stockUp" name="stockUp" />
+                    <input type="hidden" id="categoriaUp" name="categoriaUp" />
+                    <input type="hidden" id="codigoUp" name="codigoUp" />
+                    <input type="hidden" id="nombreUp" name="nombreUp" />
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="codigoUp">Código</label>
-                            <input type="text" id="codigoUp" class="form-control" disabled>
+                            <input type="text" id="codigoV" name="codigoV" class="form-control" disabled />
                         </div>
                         <div class="form-group">
                             <label for="nombreUp">Nombre</label>
-                            <input type="text" class="form-control" id="nombreUp" />
-                        </div>
-                        <div class="form-group">
-                            <label for="descripcionUp">Descripción</label>
-                            <input type="text" class="form-control" id="descripcionUp" />
+                            <input type="text" class="form-control" id="nombreV" name="nombreV" disabled />
                         </div>
                         <div class="form-group">
                             <label for="cantidadUp">Cantidad</label>
-                            <input type="text" class="form-control" id="cantidadUp" />
-                        </div>
-                        <div class="form-group">
-                            <label for="precioUp">Precio</label>
-                            <input type="text" class="form-control" id="precioUp" />
+                            <input type="text" class="form-control" id="cantidadUp" name="cantidadUp" />
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">
                             Cerrar
                         </button>
-                        <button type="submit" name="editProduct" class="btn btn-primary">
-                            Actualizar
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Agregar al Inventario -->
-    <div class="modal fade" id="addProductInventarioModal" tabindex="-1" aria-labelledby="addProductInventarioModal"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addProductInventarioModal">
-                        Agregar Productos al Inventario
-                    </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="codigo">Código</label>
-                            <input type="text" class="form-control" id="codigo" />
-                        </div>
-                        <div class="form-group">
-                            <label for="cantidad">Cantidad</label>
-                            <input type="text" class="form-control" id="cantidad" />
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                            Cerrar
-                        </button>
-                        <button type="submit" name="addProductsInventario" class="btn btn-primary">
-                            Agregar Productos
+                        <button type="submit" name="vender" class="btn btn-success">
+                            Vender
                         </button>
                     </div>
                 </form>
@@ -241,9 +165,9 @@
                     </div>
                 </section>
                 <section class="bg-grey">
-                    <div class="container">
+                    <div class="mr-3 ml-3">
                         <div class="row">
-                            <div class="col-lg-12 my-3">
+                            <div class="col-lg-8 my-3">
                                 <div class="card rounded-0">
                                     <div class="card-header bg-light">
                                         <h6 class="font-weight-bold mb-0">Listado de Productos</h6>
@@ -254,28 +178,31 @@
                                             <thead class="thead-dark">
                                                 <tr>
                                                     <th scope="col">Código</th>
-                                                    <th scope="col">Descripción</th>
-                                                    <th scope="col">Tamaño</th>
-                                                    <th scope="col">Precio</th>
-                                                    <th scope="col">Costo</th>
+                                                    <th scope="col">Nombre</th>
+                                                    <th scope="col">Categoría</th>
+                                                    <th scope="col">Tipo</th>
                                                     <th scope="col">Existencia</th>
-                                                    <th scope="col">Punto ReOrden</th>
-                                                    <th scope="col">Estado</th>
+                                                    <th scope="col">Precio Unitario</th>
+                                                    <th scope="col">Comprar</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <!-- <?php foreach ($resultados as $res) { ?> -->
+                                                <?php foreach ($resultados as $res) { ?>
                                                 <tr>
-                                                    <!--<th scope="row"><?=$res['cod_producto'] ?></th>
-                                                    <td><?=$res['descripcion_producto'] ?></td>
-                                                    <td><?=$res['tamaño_producto'] ?></td>
-                                                    <td><?=$res['precio_producto'] ?></td>
-                                                    <td><?=$res['costo_produccion'] ?></td>
-                                                    <td><?=$res['existencia'] ?></td>
-                                                    <td><?=$res['punto_reorden'] ?></td>
-                                                    <td><?=$res['estado_producto'] ?></td> -->
+                                                    <td class="font-weight-bold"><?=$res['cod_producto'] ?></td>
+                                                    <td><?=$res['nombre'] ?></td>
+                                                    <td><?=$res['Categoria'] ?></td>
+                                                    <td><?=$res['Tipo'] ?></td>
+                                                    <td><?=$res['stock'] ?></td>
+                                                    <td><?=$res['precio_unitario'] ?></td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-success comprar"
+                                                            value="<?php echo $res['cod_producto']; ?>">
+                                                            Comprar
+                                                        </button>
+                                                    </td>
                                                 </tr>
-                                                <!-- <?php } ?> -->
+                                                <?php } ?>
                                             </tbody>
                                         </table>
                                         <!-- <?php } else { ?>
@@ -284,12 +211,26 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <?php
+                                if ($checkList) {  
+                            ?>
+                            <div class="col-lg-4 my-3">
+                                <div class="card rounded-0">
+                                    <div class="card-header bg-light">
+                                        <h6 class="font-weight-bold mb-0">Listado de Compra</h6>
+                                    </div>
+                                    <h6 class="mb-0">Cantidad de Objetos: <?php echo count($carrito); ?></h6>
+                                </div>
+                            </div>
+                            <?php } ?>
                         </div>
                     </div>
-                </section>
             </div>
+            </section>
         </div>
-        <!-- Final del Contenido -->
+    </div>
+    <!-- Final del Contenido -->
     </div>
 
     <!-- jQuery and JS bundle w/ Popper.js -->
@@ -301,6 +242,27 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"
         integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous">
+    </script>
+    <script>
+    $(document).ready(function() {
+        $('.comprar').on('click', function() {
+
+            $('#venderProducto').modal('show');
+
+            $tr = $(this).closest('tr');
+            var datos = $tr.children("td").map(function() {
+                return $(this).text();
+            }).get();
+            console.log(datos);
+            $('#codigoUp').val(datos[0].replace(/\n/g, ' '));
+            $('#nombreUp').val(datos[1]);
+            $('#codigoV').val(datos[0].replace(/\n/g, ' '));
+            $('#nombreV').val(datos[1]);
+            $('#categoriaUp').val(datos[2]);
+            $('#tipoUp').val(datos[3]);
+            $('#stockUp').val(datos[4]);
+        });
+    });
     </script>
 </body>
 
