@@ -67,7 +67,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="" method="POST">
+                <form action="../../procesos.php" method="POST">
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="codigo">Código</label>
@@ -80,11 +80,9 @@
                         <div class="form-group">
                             <label for="categoria">Categoria</label>
                             <select class="custom-select my-1 mr-sm-2" id="categoria" name="categoria">
-                                <?php 
-                                    foreach ($categorias as $categoria) {
-                                        echo '<option '.$categoria[id_categoria].'>'.$categoria[descripcion].'</option>'; 
-                                    }                    
-                                ?>
+                            <?php foreach ($categorias as $categoria){
+                                    echo '<option value="'.$categoria[id_categoria].'">'.$categoria[descripcion].'</option>'; 
+                            }?>
                             </select>
                         </div>
                         <div class="form-group">
@@ -92,7 +90,7 @@
                             <select class="custom-select my-1 mr-sm-2" id="tipo" name="tipo">
                                 <?php 
                                     foreach ($tipos as $tipo) {
-                                        echo '<option '.$tipo[id_tipo].'>'.$tipo[descripcion].'</option>'; 
+                                        echo '<option value="'.$tipo[id_tipo].'">'.$tipo[descripcion].'</option>'; 
                                     }                    
                                 ?>
                             </select>
@@ -143,30 +141,12 @@
                             <label for="nombreUp">Nombre</label>
                             <input type="text" name="nom" class="form-control" id="nombreUp" required/>
                         </div>
-<<<<<<< HEAD
-                       
-                        <div class="arreglo">
-                        <label>Seleccionador de Categoria
-                        <select name = "cat" >
-                        <?php
-
-                        $conn = new Conexion();
-                        $con = $conn->Conectar();
-                        $query = "SELECT * FROM inventario_categoria";
-                        $result = mysqli_query($conn->Conectar(), $query);
-                        while($row =mysqli_fetch_assoc($result)){
-                        ?>
-                        <option value="<?= $row['id_categoria'] ?>"><?= $row['descripcion'] ?></option>
-                        <?php }?>
-                        </select>
-                        </label>
-=======
                         <div class="form-group">
                             <label for="categoria">Categoria</label>
                             <select class="custom-select my-1 mr-sm-2" id="categoria" name="categoria">
                                 <?php 
                                     foreach ($categorias as $categoria) {
-                                        echo '<option '.$categoria[id_categoria].'>'.$categoria[descripcion].'</option>'; 
+                                        echo '<option value="'.$categoria[id_categoria].'">'.$categoria[descripcion].'</option>'; 
                                     }                    
                                 ?>
                             </select>
@@ -176,29 +156,13 @@
                             <select class="custom-select my-1 mr-sm-2" id="tipo" name="tipo">
                                 <?php 
                                     foreach ($tipos as $tipo) {
-                                        echo '<option '.$tipo[id_tipo].'>'.$tipo[descripcion].'</option>'; 
+                                        echo '<option value="'.$tipo[id_tipo].'">'.$tipo[descripcion].'</option>'; 
                                     }                    
                                 ?>
                             </select>
->>>>>>> 0ffca0d5a9cae36b2c4d654b1a8204bba70b858e
                         </div>
 
-                        <div class="arreglo">
-                        <label>Seleccionador de Tipo
-                        <select name = "tipo" >
-                        <?php
-
-                        $conn = new Conexion();
-                        $con = $conn->Conectar();
-                        $query = "SELECT * FROM inventario_tipo;";
-                        $result = mysqli_query($conn->Conectar(), $query);
-                        while($row =mysqli_fetch_assoc($result)){
-                        ?>
-                        <option value="<?= $row['id_tipo'] ?>"><?= $row['descripcion'] ?></option>
-                        <?php }?>
-                        </select>
-                        </label>
-                        </div>  
+                         
   
                         <div class="form-group">
                             <label for="cantidadUp">Cantidad</label>
@@ -310,11 +274,8 @@
                                                     <th scope="col">Nombre</th>
                                                     <th scope="col">Categoría</th>
                                                     <th scope="col">Tipo</th>
-                                                    <th scope="col">Cajas Totales</th>
-                                                    <th scope="col">Salidas Totales</th>
                                                     <th scope="col">Existencia</th>
                                                     <th scope="col">Precio Unitario</th>
-                                                    <th scope="col">Importe Inventariado</th>
                                                     <th scope="col">Ventas Totales</th>
                                                     <th scope="col">Acción</th>
                                                 </tr>
@@ -326,11 +287,8 @@
                                                     <td><?=$res['nombre'] ?></td>
                                                     <td><?=$res['Categoria'] ?></td>
                                                     <td><?=$res['Tipo'] ?></td>
-                                                    <td><?=$res['cajas_totales'] ?></td>
-                                                    <td><?=$res['salidas_totales'] ?></td>
                                                     <td><?=$res['stock'] ?></td>
                                                     <td><?=$res['precio_unitario'] ?></td>
-                                                    <td><?=$res['importe_inventariado'] ?></td>
                                                     <td><?=$res['ventas_total'] ?></td>
                                                     <td>
                                                         <button type="button" class="btn btn-secondary editbtn"

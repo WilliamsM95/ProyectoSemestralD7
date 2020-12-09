@@ -34,7 +34,7 @@ class Productos {
             die("ConexiÃ³n Fallida: " . $con->connect_error);
         }
 
-        $query = "SELECT `cod_producto`, nombre, t2.descripcion as Categoria, t3.descripcion as Tipo, `cajas_totales`, `salidas_totales`, `stock`, `precio_unitario`, `importe_inventariado`, `ventas_total` FROM `inventario` t1 INNER JOIN inventario_categoria t2 ON t1.categoria = t2.id_categoria INNER JOIN inventario_tipo t3 ON t1.tipo_producto = t3.id_tipo";
+        $query = "SELECT `cod_producto`, nombre, t2.descripcion as Categoria, t3.descripcion as Tipo, `stock`, `precio_unitario`, `ventas_total` FROM `inventario` t1 INNER JOIN inventario_categoria t2 ON t1.categoria = t2.id_categoria INNER JOIN inventario_tipo t3 ON t1.tipo_producto = t3.id_tipo";
 
         $res = mysqli_query($conn->Conectar(),$query);
         $datos = array();
@@ -72,12 +72,22 @@ class Productos {
     
     }
 
-    public function InsertarProductos($cod_producto, $nombre_producto, $categoria, $stock,$precio_unitario)
-    {//($idCliente, $nombreCliente, $categoria, $tipo_producto, $cajas_totales, $salidas_totales, $stock, $precio_unitario, $importe, $ventas_tot);
+    public function InsertarProductos($nombre, $categoria, $tipo, $cantidad, $precio)
+    {
+        $conn = new Conexion();
         $con = new Conexion();   
-        $insertar = "INSERT INTO inventario(cod_producto, nombre,categoria,stock,precio_unitario) VALUES ('$cod_producto', '$nombre_producto', '$categoria','$stock', '$precio_unitario')";
+        $insertar = "INSERT INTO `inventario` (`nombre`, `categoria`, `tipo_producto`, `stock`, `precio_unitario`) VALUES ('$nombre', '$categoria', '$tipo', '$cantidad', '$precio')";
         
-        $query = mysqli_query($con->Conexion(),$insertar);
+        $query = mysqli_query($conn->Conectar(),$insertar);
+        if (!$query) 
+        {
+            echo "Error al insertar datos";
+        }else
+        {
+            echo'<script type="text/javascript">
+                        alert("Registro guardado");
+                </script>';
+        }
     }
 
     public function getCategoria(){
