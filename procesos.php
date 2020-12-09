@@ -8,3 +8,4 @@
         $id = $_GET['delete'];
         $productos->eliminarProducto($id);
     }
+    header('Location: frontend/pages/productos.php');

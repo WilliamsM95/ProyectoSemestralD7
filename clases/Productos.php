@@ -68,7 +68,7 @@ class Productos {
             die("Conexión Fallida: " . $con->connect_error);
         }
 
-        $query = "SELECT nombre, `cod_producto`, t2.descripcion as Categoria, t3.descripcion as Tipo, `cajas_totales`, `salidas_totales`, `stock`, `precio_unitario`, `importe_inventariado`, `ventas_total` FROM `inventario` t1 INNER JOIN inventario_categoria t2 ON t1.categoria = t2.id_categoria INNER JOIN inventario_tipo t3 ON t1.tipo_producto = t3.id_tipo WHERE `inventario`.`cod_producto` = $id";
+        $query = "SELECT nombre, `cod_producto`, t2.descripcion as Categoria, t3.descripcion as Tipo, `cajas_totales`, `salidas_totales`, `stock`, `precio_unitario`, `importe_inventariado`, `ventas_total` FROM `inventario` t1 INNER JOIN inventario_categoria t2 ON t1.categoria = t2.id_categoria INNER JOIN inventario_tipo t3 ON t1.tipo_producto = t3.id_tipo WHERE `inventario`.`cod_producto` = $this->id";
         $res = mysqli_query($conn->Conectar(),$query);
         if(count($res) == 1){
             $dato = $res->fetch_array();
