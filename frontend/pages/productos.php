@@ -15,21 +15,16 @@
         $check = true;
     }
 
-    // if(isset($_POST['submit'])){
-    //     $arregloSeleccionado = $_POST['arreglo'];
-    //     $remitente = $_POST['remitente'];
-    //     $destinatario = $_POST['destinatario'];
-    //     $telefono = $_POST['telefono'];
-    //     $direccion = $_POST['direccion'];
-    //     $mensaje = $_POST['mensaje'];
-    //     $color = $_POST['color'];
+    
 
-    //     $datos = new Datos($remitente, $destinatario, $telefono, $direccion, $mensaje, $color, $arregloSeleccionado);
+ 
+  
+  
+    }
+   
+        
 
-    //     echo $datos->InsertarDatos();
-    //     $resultados = $login->getDatos();
-    //     $check = true;
-    // }
+
 
 ?>
 <!DOCTYPE html>
@@ -68,23 +63,23 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="codigo">Código</label>
-                            <input type="text" class="form-control" id="codigo" name="codigo"/>
+                            <input type="text" class="form-control" id="codigo" />
                         </div>
                         <div class="form-group">
                             <label for="nombre">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" name="nombre"/>
+                            <input type="text" class="form-control" id="nombre" />
                         </div>
                         <div class="form-group">
                             <label for="descripcion">Descripción</label>
-                            <input type="text" class="form-control" id="descripcion" name="descripcion"/>
+                            <input type="text" class="form-control" id="descripcion" />
                         </div>
                         <div class="form-group">
                             <label for="cantidad">Cantidad</label>
-                            <input type="text" class="form-control" id="cantidad" name="cantidad"/>
+                            <input type="text" class="form-control" id="cantidad" />
                         </div>
                         <div class="form-group">
                             <label for="precio">Precio</label>
-                            <input type="text" class="form-control" id="precio" name="precio"/>
+                            <input type="text" class="form-control" id="precio" />
                         </div>
                     </div>
                     <div class="modal-footer">

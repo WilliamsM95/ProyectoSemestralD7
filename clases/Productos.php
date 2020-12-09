@@ -80,4 +80,12 @@ class Productos {
         return $dato;
     }
 
+    public function InsertarProductos($cod_producto, $nombre_producto, $categoria, $stock,$precio_unitario)
+    {//($idCliente, $nombreCliente, $categoria, $tipo_producto, $cajas_totales, $salidas_totales, $stock, $precio_unitario, $importe, $ventas_tot);
+        $con = new Conexion();   
+        $insertar = "INSERT INTO inventario(cod_producto, nombre,categoria,stock,precio_unitario) VALUES ('$cod_producto', '$nombre_producto', '$categoria','$stock', '$precio_unitario')";
+        
+        $query = mysqli_query($con->Conexion(),$insertar);
+    }
+
 }
